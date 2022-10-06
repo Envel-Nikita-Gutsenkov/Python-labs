@@ -81,32 +81,76 @@ def output():
 
 
 # ИНТЕРФЕЙС
-window = tk.Tk()
-window.title("Лабораторная работа 5")
+def method():
+    window = tk.Tk()
+    window.title("Лабораторная работа 5")
 
-#window.rowconfigure(0, minsize=800, weight=1)
-#window.columnconfigure(1, minsize=800, weight=1)
+    window.geometry("900x450")
 
-# Create the label objects and pack them using grid
-tk.Label(window, text="Выберите способ сортировки").grid(row=0, column=0)
+    # Create the label objects and pack them using grid
+    tk.Label(window, text="Выберите способ сортировки").grid(row=0, column=0)
 
-frm_buttons = tk.Frame(window)
-btn1 = tk.Button(frm_buttons, text=m1, command=one)
-btn2 = tk.Button(frm_buttons, text=m2, command=two)
-btn3 = tk.Button(frm_buttons, text=m3, command=three)
-btn4 = tk.Button(frm_buttons, text=m4, command=four)
-btn5 = tk.Button(frm_buttons, text=m5, command=five)
-btn6 = tk.Button(frm_buttons, text=m6, command=six)
-btn7 = tk.Button(frm_buttons, text=m7, command=seven)
+    frm_buttons = tk.Frame(window)
+    btn1 = tk.Button(frm_buttons, text=m1, command=one)
+    btn2 = tk.Button(frm_buttons, text=m2, command=two)
+    btn3 = tk.Button(frm_buttons, text=m3, command=three)
+    btn4 = tk.Button(frm_buttons, text=m4, command=four)
+    btn5 = tk.Button(frm_buttons, text=m5, command=five)
+    btn6 = tk.Button(frm_buttons, text=m6, command=six)
+    btn7 = tk.Button(frm_buttons, text=m7, command=seven)
 
-btn1.grid(row=2, column=2, sticky="ew", padx=5, pady=5)
-btn2.grid(row=3, column=2, sticky="ew", padx=5, pady=5)
-btn3.grid(row=4, column=2, sticky="ew", padx=5, pady=5)
-btn4.grid(row=5, column=2, sticky="ew", padx=5, pady=5)
-btn5.grid(row=6, column=2, sticky="ew", padx=5, pady=5)
-btn6.grid(row=7, column=2, sticky="ew", padx=5, pady=5)
-btn7.grid(row=8, column=2, sticky="ew", padx=5)
+    btn1.grid(row=2, column=0, sticky="ew", padx=5, pady=5)
+    btn2.grid(row=3, column=0, sticky="ew", padx=5, pady=5)
+    btn3.grid(row=4, column=0, sticky="ew", padx=5, pady=5)
+    btn4.grid(row=5, column=0, sticky="ew", padx=5, pady=5)
+    btn5.grid(row=6, column=0, sticky="ew", padx=5, pady=5)
+    btn6.grid(row=7, column=0, sticky="ew", padx=5, pady=5)
+    btn7.grid(row=8, column=0, sticky="ew", padx=5)
 
-frm_buttons.grid(row=0, column=1, sticky="ns")
+    frm_buttons.grid(row=0, column=1, sticky="ns")
 
-window.mainloop()
+    window.mainloop()
+
+def arraysize():
+    window = tk.Tk()
+    window.title("Лабораторная работа 5")
+    window.geometry("900x450")
+
+    tk.Label(window, text="Введите размер массива").pack()
+    tk.Entry(window, text="10").pack()
+    tk.Button(window, text="ОК").pack()
+
+    window.mainloop()
+'''from Tkinter import *
+
+root = Tk()
+scrollbar = Scrollbar(root)
+scrollbar.pack( side = RIGHT, fill = Y )
+
+mylist = Listbox(root, yscrollcommand = scrollbar.set )
+for line in range(100):
+   mylist.insert(END, "This is line number " + str(line))
+
+mylist.pack( side = LEFT, fill = BOTH )
+scrollbar.config( command = mylist.yview )
+
+mainloop()'''
+
+
+def arrayinput():
+    window = tk.Tk()
+    window.title("Лабораторная работа 5")
+    window.geometry("900x450")
+
+    namR = []
+
+    for i in range(10):
+
+        tk.Label(window, text=f"Элемент номер {i}").pack()
+        entry = tk.Entry(window, text="10").pack()
+
+    tk.Button(window, text="ОК").pack()
+
+    window.mainloop()
+
+arrayinput()
