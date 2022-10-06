@@ -84,8 +84,8 @@ def output():
 window = tk.Tk()
 window.title("Лабораторная работа 5")
 
-window.rowconfigure(0, minsize=800, weight=1)
-window.columnconfigure(1, minsize=800, weight=1)
+#window.rowconfigure(0, minsize=800, weight=1)
+#window.columnconfigure(1, minsize=800, weight=1)
 
 # Create the label objects and pack them using grid
 tk.Label(window, text="Выберите способ сортировки").grid(row=0, column=0)

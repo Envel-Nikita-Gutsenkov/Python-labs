@@ -12,7 +12,7 @@ button1.grid(columnspan=2, row=2, column=0)
 
 # Create another button
 button2 = tk.Button(master, text="Button 2")
-button2.grid(columnspan=1, row=2, column=2)
+button2.grid(columnspan=4, row=4, column=0)
 
 # The mainloop
 tk.mainloop()
