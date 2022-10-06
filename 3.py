@@ -9,6 +9,6 @@ x = float(input())
 temp = re.search(r"(?<=\.)\d{3}", str(x))
 # проверка всех условий
 if x >= 0 and '0' in temp.group():
-    print("Выполняются заданные условия")
+    print("True")
 else:
-    print("Заданные условия НЕ выполняются")
+    print("False")
