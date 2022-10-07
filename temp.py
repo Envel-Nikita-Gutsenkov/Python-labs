@@ -1,46 +1,43 @@
-'''import tkinter as tk
-
-# Create the master object
-master = tk.Tk()
-
-# Create the label objects and pack them using grid
-tk.Label(master, text="Выберите способ сортировки").grid(row=0, column=0)
-
-
-button1 = tk.Button(master, text="Button 1")
-button1.grid(columnspan=2, row=2, column=0)
-
-# Create another button
-button2 = tk.Button(master, text="Button 2")
-button2.grid(columnspan=4, row=4, column=0)
-
-# The mainloop
-tk.mainloop()
 import tkinter as tk
 
-window = tk.Tk()
+class SampleApp(tk.Tk):
+    def __init__(self):
+        tk.Tk.__init__(self)
+        self._frame = None
+        self.switch_frame(StartPage)
 
-for i in range(10):
-        frame = tk.Frame(master=window)
-        frame.grid(row=i, column=1, padx=5, pady=5)
-        label = tk.Entry(master=frame, width=10)
-        label2 = tk.Label(master=frame, text=f"Элемент номер {i}")
-        label.pack(padx=5, pady=5)
-        label2.pack(padx=5, pady=5)
+    def switch_frame(self, frame_class):
+        new_frame = frame_class(self)
+        if self._frame is not None:
+            self._frame.destroy()
+        self._frame = new_frame
+        self._frame.pack()
 
-window.mainloop()'''
+class StartPage(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+        tk.Label(self, text="Start page", font=('Helvetica', 18, "bold")).pack(side="top", fill="x", pady=5)
+        tk.Button(self, text="Go to page one",
+                  command=lambda: master.switch_frame(PageOne)).pack()
+        tk.Button(self, text="Go to page two",
+                  command=lambda: master.switch_frame(PageTwo)).pack()
 
-from tkinter import *
+class PageOne(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+        tk.Frame.configure(self,bg='blue')
+        tk.Label(self, text="Page one", font=('Helvetica', 18, "bold")).pack(side="top", fill="x", pady=5)
+        tk.Button(self, text="Go back to start page",
+                  command=lambda: master.switch_frame(StartPage)).pack()
 
-root = Tk()
-scrollbar = Scrollbar(root)
-scrollbar.pack( side = RIGHT, fill = Y )
+class PageTwo(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+        tk.Frame.configure(self,bg='red')
+        tk.Label(self, text="Page two", font=('Helvetica', 18, "bold")).pack(side="top", fill="x", pady=5)
+        tk.Button(self, text="Go back to start page",
+                  command=lambda: master.switch_frame(StartPage)).pack()
 
-mylist = Listbox(root, yscrollcommand = scrollbar.set )
-for line in range(100):
-   mylist.insert(END, "This is line number " + str(line))
-
-mylist.pack( side = LEFT, fill = BOTH )
-scrollbar.config( command = mylist.yview )
-
-mainloop()
+if __name__ == "__main__":
+    app = SampleApp()
+    app.mainloop()

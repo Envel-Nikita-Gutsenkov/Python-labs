@@ -8,6 +8,7 @@ m5 = "5. Отсортировать массив по неубыванию ме�
 m6 = "6. Получить упорядоченный по неубыванию массив методом слияния двух упорядоченных\n по невозрастанию массивов"
 m7 = "7. Отсортировать массив по невозрастанию методом распределения по массиву ключей,\n упорядоченному по неубыванию"
 
+a1 = []
 
 # ЛОГИКА
 
@@ -73,14 +74,25 @@ def six():
 def seven():
     output()
 
+def swapPositions(pos1, pos2):
+    temp = a1[pos1]
+    a1[pos1] = a1[pos2]
+    a1[pos2] = temp
+    return a1
 
 # вывод данных
 def output():
     print("Результат: ")
     print(None)
 
+def arrayprocess():
+    rawdata = ArrayInput.rawdata.get()
+    print("Получил ", rawdata)
+    #a1 = rawdata.split(',')
+    print("List is - ", a1)
 
 # ИНТЕРФЕЙС
+
 def method():
     window = tk.Tk()
     window.title("Лабораторная работа 5")
@@ -111,46 +123,33 @@ def method():
 
     window.mainloop()
 
-def arraysize():
-    window = tk.Tk()
-    window.title("Лабораторная работа 5")
-    window.geometry("900x450")
+class InitPage(tk.Tk):
+    def __init__(self):
+        tk.Tk.__init__(self)
+        self._frame = None
+        self.switch_frame(ArrayInput)
+        self.title("Лабораторная работа 5")
+        self.geometry("900x450")
 
-    tk.Label(window, text="Введите размер массива").pack()
-    tk.Entry(window, text="10").pack()
-    tk.Button(window, text="ОК").pack()
+    def switch_frame(self, frame_class):
+        new_frame = frame_class(self)
+        if self._frame is not None:
+            self._frame.destroy()
+        self._frame = new_frame
+        self._frame.pack()
 
-    window.mainloop()
-'''from Tkinter import *
+class ArrayInput(tk.Frame):
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
+        tk.Label(self, text="Введите элементы массива через запятую", font=('Helvetica', 18, "bold")).pack(side="top", fill="x", pady=5)
+        rawdata = tk.Entry(self, text="10", width=100).pack()
+        tk.Button(self, text="OK",
+                  command=lambda: [master.switch_frame(ArrayInput), output(), print("Передал ", rawdata)]).pack()
 
-root = Tk()
-scrollbar = Scrollbar(root)
-scrollbar.pack( side = RIGHT, fill = Y )
+    def output(self):
+        rawdata = ArrayInput.rawdata.get()
+        print("Получил ", rawdata)
 
-mylist = Listbox(root, yscrollcommand = scrollbar.set )
-for line in range(100):
-   mylist.insert(END, "This is line number " + str(line))
-
-mylist.pack( side = LEFT, fill = BOTH )
-scrollbar.config( command = mylist.yview )
-
-mainloop()'''
-
-
-def arrayinput():
-    window = tk.Tk()
-    window.title("Лабораторная работа 5")
-    window.geometry("900x450")
-
-    namR = []
-
-    for i in range(10):
-
-        tk.Label(window, text=f"Элемент номер {i}").pack()
-        entry = tk.Entry(window, text="10").pack()
-
-    tk.Button(window, text="ОК").pack()
-
-    window.mainloop()
-
-arrayinput()
+if __name__ == "__main__":
+    app = InitPage()
+    app.mainloop()
