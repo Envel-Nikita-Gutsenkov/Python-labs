@@ -27,6 +27,8 @@ def one(window):
 
 
 def two(window):
+    global smethod
+    smethod = m1
     for f in range(0, len(a1), 1):
         temp = f
         for u in range(f + 1, len(a1), 1):
@@ -37,6 +39,8 @@ def two(window):
 
 
 def three(window):
+    global smethod
+    smethod = m1
     for u in range(len(a1) - 1, 0, -1):
         for f in range(len(a1) - 1, 0, -1):
             if a1[f - 1] > a1[f]:
@@ -45,6 +49,8 @@ def three(window):
 
 
 def four(window):
+    global smethod
+    smethod = m1
     w = bool(True)
     for u in range(1, len(a1), 1):
         if w == bool(False):
@@ -59,6 +65,8 @@ def four(window):
 
 
 def five(window):
+    global smethod
+    smethod = m1
     for u in range(len(a1) - 1, 0, -1):
         w = bool(True)
         for f in range(len(a1) - 1, 0, -1):
@@ -73,10 +81,14 @@ def five(window):
 
 
 def six(window):
+    global smethod
+    smethod = m1
     switch(window, output, None)
 
 
 def seven(window):
+    global smethod
+    smethod = m1
     switch(window, output, None)
 
 
