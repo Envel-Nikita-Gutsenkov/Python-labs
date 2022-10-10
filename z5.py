@@ -9,37 +9,42 @@ m6 = "6. Получить упорядоченный по неубыванию �
 m7 = "7. Отсортировать массив по невозрастанию методом распределения по массиву ключей,\n упорядоченному по неубыванию"
 
 a1 = []
+a2 = []
+smethod = ""
+
 
 # ЛОГИКА
 
 # методы сортировки
-def one():
+def one(window):
+    global smethod
+    smethod = m1
     for f in range(len(a1) - 1, -1, -1):
         for u in range(len(a1) - 1, -1, -1):
             if a1[f] < a1[u]:
                 swapPositions(f, u)
-    output()
+    switch(window, output, None)
 
 
-def two():
+def two(window):
     for f in range(0, len(a1), 1):
         temp = f
         for u in range(f + 1, len(a1), 1):
             if a1[temp] < a1[u]:
                 temp = u
         swapPositions(f, temp)
-    output()
+    switch(window, output, None)
 
 
-def three():
+def three(window):
     for u in range(len(a1) - 1, 0, -1):
         for f in range(len(a1) - 1, 0, -1):
             if a1[f - 1] > a1[f]:
                 swapPositions(f - 1, f)
-    output()
+    switch(window, output, None)
 
 
-def four():
+def four(window):
     w = bool(True)
     for u in range(1, len(a1), 1):
         if w == bool(False):
@@ -50,10 +55,10 @@ def four():
                 if a1[f - 1] < a1[f]:
                     swapPositions(f - 1, f)
                     w = bool(True)
-    output()
+    switch(window, output, None)
 
 
-def five():
+def five(window):
     for u in range(len(a1) - 1, 0, -1):
         w = bool(True)
         for f in range(len(a1) - 1, 0, -1):
@@ -64,52 +69,61 @@ def five():
                 print("Произвел замену и возврат к началу")
                 output()
                 w = bool(False)
-    output()
+    switch(window, output, None)
 
 
-def six():
-    output()
+def six(window):
+    switch(window, output, None)
 
 
-def seven():
-    output()
+def seven(window):
+    switch(window, output, None)
 
+
+# меняет элементы массива местами
 def swapPositions(pos1, pos2):
     temp = a1[pos1]
     a1[pos1] = a1[pos2]
     a1[pos2] = temp
     return a1
 
-# вывод данных
-def output():
-    print("Результат: ")
-    print(None)
 
-def arrayprocess():
-    rawdata = ArrayInput.rawdata.get()
-    print("Получил ", rawdata)
-    #a1 = rawdata.split(',')
-    print("List is - ", a1)
+# получает строку данных из tk.Entry и создает из этого массив
+def arrayprocess(rawarray):
+    global a1, a2
+    a1 = rawarray.split(',')
+    # для вывода исходного массива в ответе
+    a2 = list(a1)
+    method()
+
 
 # ИНТЕРФЕЙС
 
+# управляет переключением интерфейса, чтобы одновременно существовал только один интерфейс
+def switch(interface, newinterface, data):
+    interface.destroy()
+    if newinterface is not None and data is not None:
+        newinterface(data)
+    elif newinterface is not None and data is None:
+        newinterface()
+
+
+# выбор метода сортировки
 def method():
     window = tk.Tk()
     window.title("Лабораторная работа 5")
 
-    window.geometry("900x450")
-
-    # Create the label objects and pack them using grid
-    tk.Label(window, text="Выберите способ сортировки").grid(row=0, column=0)
+    window.geometry("685x455")
 
     frm_buttons = tk.Frame(window)
-    btn1 = tk.Button(frm_buttons, text=m1, command=one)
-    btn2 = tk.Button(frm_buttons, text=m2, command=two)
-    btn3 = tk.Button(frm_buttons, text=m3, command=three)
-    btn4 = tk.Button(frm_buttons, text=m4, command=four)
-    btn5 = tk.Button(frm_buttons, text=m5, command=five)
-    btn6 = tk.Button(frm_buttons, text=m6, command=six)
-    btn7 = tk.Button(frm_buttons, text=m7, command=seven)
+    tk.Label(frm_buttons, text="Выберите способ сортировки", font=('Helvetica', 16, "bold")).grid(row=0, column=0)
+    btn1 = tk.Button(frm_buttons, text=m1, command=lambda: one(window))
+    btn2 = tk.Button(frm_buttons, text=m2, command=lambda: two(window))
+    btn3 = tk.Button(frm_buttons, text=m3, command=lambda: three(window))
+    btn4 = tk.Button(frm_buttons, text=m4, command=lambda: four(window))
+    btn5 = tk.Button(frm_buttons, text=m5, command=lambda: five(window))
+    btn6 = tk.Button(frm_buttons, text=m6, command=lambda: six(window))
+    btn7 = tk.Button(frm_buttons, text=m7, command=lambda: seven(window))
 
     btn1.grid(row=2, column=0, sticky="ew", padx=5, pady=5)
     btn2.grid(row=3, column=0, sticky="ew", padx=5, pady=5)
@@ -123,33 +137,51 @@ def method():
 
     window.mainloop()
 
-class InitPage(tk.Tk):
-    def __init__(self):
-        tk.Tk.__init__(self)
-        self._frame = None
-        self.switch_frame(ArrayInput)
-        self.title("Лабораторная работа 5")
-        self.geometry("900x450")
 
-    def switch_frame(self, frame_class):
-        new_frame = frame_class(self)
-        if self._frame is not None:
-            self._frame.destroy()
-        self._frame = new_frame
-        self._frame.pack()
+# ввод элементов массива
+def arrayinput():
+    window = tk.Tk()
+    window.title("Лабораторная работа 5")
+    window.geometry("685x455")
 
-class ArrayInput(tk.Frame):
-    def __init__(self, master):
-        tk.Frame.__init__(self, master)
-        tk.Label(self, text="Введите элементы массива через запятую", font=('Helvetica', 18, "bold")).pack(side="top", fill="x", pady=5)
-        rawdata = tk.Entry(self, text="10", width=100).pack()
-        tk.Button(self, text="OK",
-                  command=lambda: [master.switch_frame(ArrayInput), output(), print("Передал ", rawdata)]).pack()
+    fields = {}
+    rawarray = tk.StringVar()
 
-    def output(self):
-        rawdata = ArrayInput.rawdata.get()
-        print("Получил ", rawdata)
+    fields['array_label'] = tk.Label(text="Введите элементы массива через запятую", font=('Helvetica', 18, "bold"))
+    fields['rawarray'] = tk.Entry(window, textvariable=rawarray)
 
-if __name__ == "__main__":
-    app = InitPage()
-    app.mainloop()
+    for field in fields.values():
+        field.pack(anchor=tk.W, padx=10, pady=5, fill=tk.X)
+
+    tk.Button(text='OK', width=15, command=lambda: (switch(window, arrayprocess, rawarray.get()))).pack()
+
+    window.mainloop()
+
+
+#  Вывод ответа
+def output():
+    window = tk.Tk()
+    window.title("Лабораторная работа 5")
+    window.geometry("685x455")
+
+    tk.Label(window, text="Задача выполнена", font=('Helvetica', 16, "bold")).pack()
+
+    text = tk.Text(window, height=8, font=('Helvetica', 18))
+    text.pack()
+
+    text.insert('1.0', 'Был введен массив:\n')
+    text.insert('2.0', a2)
+    text.insert('4.0', '\nИспользовался метод сортировки:\n')
+    text.insert('5.0', smethod)
+    text.insert('7.0', '\nРезультат после сортировки:\n')
+    text.insert('8.0', a1)
+
+    # read only
+    text.configure(state='disabled')
+
+    tk.Button(text='Закрыть программу', width=15, command=lambda: (switch(window, None, None)))
+
+    window.mainloop()
+
+
+arrayinput()
