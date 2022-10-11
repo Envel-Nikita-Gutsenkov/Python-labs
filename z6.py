@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 
-z1 = [14]
+z1 = []
 
 
 def open_file():
@@ -21,6 +21,8 @@ def open_file():
 
 
 def save_file():
+    mylist
+
     filepath = asksaveasfilename(
         defaultextension=".txt",
         filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")],
@@ -33,19 +35,35 @@ def save_file():
     window.title(f"{filepath}")
 
 
+# сумма стр. 1–9
+def str10():
+    total = 0
+    for i in range(0, 8):
+        total = total + z1[i]
+    return total
+
+
+# подсчет необходимых частей
 def calculate():
-    None
-    #
+    global z1
+    z1.append(z1[5] * 35 / 100)
+    z1.append(z1[5] / 100)
+    z1.append(z1[5] * 4 / 100)
+    z1.append(str10())
+    z1.append(z1[9] * 5 / 100)
+    z1.append(z1[9] + z1[10])
+    z1.append(z1[11] * 20 / 100)
+    z1.append(z1[11] + z1[12])
+    print(z1)
 
 
 # запись значений в память для вычислений
 def to_memory(mylist):
-    z1 = [14]
+    global z1
     print(mylist)
-    for i in range(1, 7, 1):
-        print("шаг ", i, "запись в ", i-1)
-        print("элемент " + mylist[i])
-        z1[i-1] = extractor(mylist[i])
+    for i in range(1, 7):
+        z1.append(float(extractor(mylist[i])))
+    calculate()
 
 
 # получает строку и извлекает из нее значение, используя разделитель | и поиск цифр
