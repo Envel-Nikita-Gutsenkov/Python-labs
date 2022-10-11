@@ -21,18 +21,19 @@ def one(window):
     smethod = m1
     for f in range(len(a1) - 1, -1, -1):
         for u in range(len(a1) - 1, -1, -1):
-            if a1[f] < a1[u]:
+            if int(a1[f]) < int((a1[u])):
                 swapPositions(f, u)
     switch(window, output, None)
 
 
 def two(window):
     global smethod
-    smethod = m1
+    smethod = m2
+    print(smethod, m2)
     for f in range(0, len(a1), 1):
         temp = f
         for u in range(f + 1, len(a1), 1):
-            if a1[temp] < a1[u]:
+            if int(a1[temp]) < int(a1[u]):
                 temp = u
         swapPositions(f, temp)
     switch(window, output, None)
@@ -40,17 +41,17 @@ def two(window):
 
 def three(window):
     global smethod
-    smethod = m1
+    smethod = m3
     for u in range(len(a1) - 1, 0, -1):
         for f in range(len(a1) - 1, 0, -1):
-            if a1[f - 1] > a1[f]:
+            if int(a1[f - 1]) > int(a1[f]):
                 swapPositions(f - 1, f)
     switch(window, output, None)
 
 
 def four(window):
     global smethod
-    smethod = m1
+    smethod = m4
     w = bool(True)
     for u in range(1, len(a1), 1):
         if w == bool(False):
@@ -58,7 +59,7 @@ def four(window):
         else:
             w = bool(False)
             for f in range(1, len(a1), 1):
-                if a1[f - 1] < a1[f]:
+                if int(a1[f - 1]) < int(a1[f]):
                     swapPositions(f - 1, f)
                     w = bool(True)
     switch(window, output, None)
@@ -66,7 +67,7 @@ def four(window):
 
 def five(window):
     global smethod
-    smethod = m1
+    smethod = m5
     for u in range(len(a1) - 1, 0, -1):
         w = bool(True)
         for f in range(len(a1) - 1, 0, -1):
@@ -82,13 +83,13 @@ def five(window):
 
 def six(window):
     global smethod
-    smethod = m1
+    smethod = m6
     switch(window, output, None)
 
 
 def seven(window):
     global smethod
-    smethod = m1
+    smethod = m7
     switch(window, output, None)
 
 
@@ -181,17 +182,20 @@ def output():
     text = tk.Text(window, height=8, font=('Helvetica', 18))
     text.pack()
 
+    # исключаем переход на новую строку
+    methodoutput = smethod.replace('\n',"")
+
     text.insert('1.0', 'Был введен массив:\n')
     text.insert('2.0', a2)
     text.insert('4.0', '\nИспользовался метод сортировки:\n')
-    text.insert('5.0', smethod)
+    text.insert('5.0', methodoutput)
     text.insert('7.0', '\nРезультат после сортировки:\n')
     text.insert('8.0', a1)
 
+    tk.Button(text='Закрыть программу', width=15, command=lambda: (switch(window, None, None))).pack()
+
     # read only
     text.configure(state='disabled')
-
-    tk.Button(text='Закрыть программу', width=15, command=lambda: (switch(window, None, None)))
 
     window.mainloop()
 
