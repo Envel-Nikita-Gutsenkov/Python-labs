@@ -2,9 +2,11 @@ import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 
 z1 = []
-
+filepath = askopenfilename
+mylist = []
 
 def open_file():
+    global filepath, mylist
     filepath = askopenfilename(
         filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")]
     )
@@ -20,20 +22,27 @@ def open_file():
     to_memory(mylist)
 
 
-def save_file():
-    mylist
-
-    filepath = asksaveasfilename(
-        defaultextension=".txt",
-        filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")],
-    )
-    if not filepath:
-        return
+def save_file(mylist):
+    global filepath
+    # записываем изменения
     with open(filepath, mode="w", encoding="utf-8") as output_file:
-        text = txt_edit.get("1.0", tk.END)
-        output_file.write(text)
-    window.title(f"{filepath}")
+        output_file.writelines([str(i) for i in mylist])
+    output_file.close()
+    # перечитываем файл, чтобы отобразить изменения
+    with open(filepath, mode="r", encoding="utf-8") as input_file:
+        text = input_file.read()
+        txt_edit.insert(tk.END, text)
 
+
+
+# подготавливает к записи нужные подсчитанные строки
+def savedata():
+    for i in range(7, 15):
+        mylist[i] = mylist[i].strip('\n')
+        print("беру ", mylist[i], " и вношу туда \n", mylist[i] + str(z1[i - 1]) + "р.")
+        mylist[i] = mylist[i] + str(z1[i - 1]) + " р.\n"
+    print(mylist)
+    save_file(mylist)
 
 # сумма стр. 1–9
 def str10():
@@ -87,7 +96,7 @@ window.columnconfigure(1, minsize=800, weight=1)
 txt_edit = tk.Text(window)
 frm_buttons = tk.Frame(window, relief=tk.RAISED, bd=2)
 btn_open = tk.Button(frm_buttons, text="Открыть", command=open_file)
-btn_save = tk.Button(frm_buttons, text="РАСЧЕТ", command=save_file)
+btn_save = tk.Button(frm_buttons, text="РАСЧЕТ", command=savedata)
 
 btn_open.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
 btn_save.grid(row=1, column=0, sticky="ew", padx=5)
