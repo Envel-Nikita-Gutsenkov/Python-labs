@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 
-d = {
+'''d = {
     "1": {
         "udk": "1",
         "k_name": "Name1",
@@ -9,7 +9,7 @@ d = {
         "manufacturer": "Manuf1",
         "release_year": 2000,
         "out_date": "01.01",
-        "out_time": "10.02",
+        "out_time": "10.02"
     },
     "2": {
         "udk": "1",
@@ -18,7 +18,7 @@ d = {
         "manufacturer": "Manuf1",
         "release_year": 2000,
         "out_date": "01.01",
-        "out_time": "10.02",
+        "out_time": "10.02"
     },
     "3": {
         "udk": "1",
@@ -27,7 +27,7 @@ d = {
         "manufacturer": "Manuf1",
         "release_year": 2000,
         "out_date": "01.01",
-        "out_time": "10.02",
+        "out_time": "10.02"
     },
     "4": {
         "udk": "1",
@@ -36,8 +36,18 @@ d = {
         "manufacturer": "Manuf4",
         "release_year": 2000,
         "out_date": "01.01",
-        "out_time": "10.02",
+        "out_time": "10.02"
     }
+}'''
+
+d = {
+        "udk": ["1","1","1"],
+        "k_name": ["Name1","Name1","Name1"],
+        "k_genre": ["Genre1","Genre1","Genre1"],
+        "manufacturer": ["Manuf4","Manuf4","Manuf4"],
+        "release_year": [2000,2000,2000],
+        "out_date": ["01.01","01.01","01.01"],
+        "out_time": ["10.02","10.02","10.02"]
 }
 
 count = 4
@@ -66,11 +76,24 @@ def remove_record():
 
 
 def input_record():
-    set.insert(parent='', index='end', iid=count, text='',
+    '''set.insert(parent='', index='end', iid=count, text='',
                values=(udk.get(), k_name.get(), k_genre.get()))
 
     global count
-    count+1
+    count+1'''
+    global count
+    count += 1
+    #d[i] += 1
+
+    d.add(str(count),'udk') #= toudk.get()
+    d[str(count)]['k_name'] = tok_name.get()
+    d[str(count)]['k_genre'] = tok_genre.get()
+    d[str(count)]['manufacturer'] = tomanufacturer.get()
+    d[str(count)]['release_year'] = torelease_year.get()
+    d[str(count)]['out_date'] = toout_date.get()
+    d[str(count)]['out_time'] = toout_time.get()
+
+    print(d)
 
     toudk.delete(0, END)
     tok_name.delete(0, END)
@@ -79,6 +102,15 @@ def input_record():
     torelease_year.delete(0, END)
     toout_date.delete(0, END)
     toout_time.delete(0, END)
+
+    tableupdate(count)
+
+def tableupdate(i):
+    main_menu.insert(parent='', index='end', iid=i - 1, text='', values=(
+        d[str(i)]['udk'], d[str(i)]['k_name'], d[str(i)]['k_genre'], d[str(i)]['manufacturer'],
+        d[str(i)]['release_year'],
+        d[str(i)]['out_date'], d[str(i)]['out_time']))
+    main_menu.pack()
 
 # ИНТЕРФЕЙС
 
@@ -276,10 +308,11 @@ main_menu.heading("out_date", text=h6, anchor=CENTER)
 main_menu.heading("out_time", text=h7, anchor=CENTER)
 
 # считывает словарь в таблицу
-for i in range(1, 5):
+for i in range(1, len(d)+1):
     main_menu.insert(parent='', index='end', iid=i - 1, text='', values=(
-    d[str(i)]['udk'], d[str(i)]['k_name'], d[str(i)]['k_genre'], d[str(i)]['manufacturer'], d[str(i)]['release_year'],
-    d[str(i)]['out_date'], d[str(i)]['out_time'],))
+        d[str(i)]['udk'], d[str(i)]['k_name'], d[str(i)]['k_genre'], d[str(i)]['manufacturer'],
+        d[str(i)]['release_year'],
+        d[str(i)]['out_date'], d[str(i)]['out_time']))
 main_menu.pack()
 
 # добавление записей
