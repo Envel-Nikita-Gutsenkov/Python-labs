@@ -44,6 +44,7 @@ def remove_record():
 
     tableupdate()
 
+
 # добавление записи
 def input_record():
     global count
@@ -62,6 +63,7 @@ def input_record():
 
     tableupdate()
 
+
 # считывает словарь в таблицу
 def tableupdate():
     main_menu.delete(*main_menu.get_children())
@@ -73,6 +75,7 @@ def tableupdate():
             d['out_time'][i]))
 
     main_menu.pack()
+
 
 # удаление по году выпуска
 def yearremove(year):
@@ -93,12 +96,14 @@ def yearremove(year):
 
     tableupdate()
 
+
 # заменить udk
 def replaceudk(name, to):
     indx = search(d['k_name'], name)
     d['udk'][indx[0]] = to
 
     tableupdate()
+
 
 # все фильмы заданного производителя
 def searchfilms(name):
@@ -113,6 +118,7 @@ def searchfilms(name):
 
     main_menu.pack()
 
+
 # находит список интексов, содержащих запрошенное значение
 def search(list, item):
     indx = []
@@ -121,10 +127,12 @@ def search(list, item):
             indx.append(idx)
     return indx
 
+
 # очищает поля ввода
 def delete_entries():
-  for field in fields:
-    field.delete(0, END)
+    for field in fields:
+        field.delete(0, END)
+
 
 # ИНТЕРФЕЙС
 
@@ -187,6 +195,7 @@ def additional_menu():
     Button(ws2, text="Отмена", command=lambda: (tableupdate(), ws2.destroy())).pack()
 
     ws2.mainloop()
+
 
 # основной интерфейс
 
