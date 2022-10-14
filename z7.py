@@ -2,9 +2,9 @@ from tkinter import *
 from tkinter import ttk
 
 d = {
-    "id": ["0", "1", "3"],
+    "id": ["0", "1", "2"],
     "udk": ["1.22", "2.66", "3.44"],
-    "k_name": ["Name1", "Name1", "Name1"],
+    "k_name": ["Name1", "Name2", "Name3"],
     "k_genre": ["Genre1", "Genre1", "Genre1"],
     "manufacturer": ["Manuf4", "Manuf4", "Manuf4"],
     "release_year": [2000, 2000, 2000],
@@ -40,7 +40,7 @@ def remove_record():
     d['out_date'].pop(toremove)
     d['out_time'].pop(toremove)
 
-    id_entry.delete(0, END)
+    delete_entries()
 
     tableupdate()
 
@@ -58,13 +58,7 @@ def input_record():
     d['out_date'].append(toout_date.get())
     d['out_time'].append(toout_time.get())
 
-    toudk.delete(0, END)
-    tok_name.delete(0, END)
-    tok_genre.delete(0, END)
-    tomanufacturer.delete(0, END)
-    torelease_year.delete(0, END)
-    toout_date.delete(0, END)
-    toout_time.delete(0, END)
+    delete_entries()
 
     tableupdate()
 
@@ -81,15 +75,43 @@ def tableupdate():
     main_menu.pack()
 
 # удаление по году выпуска
-def yearremove():
-    search(d['release_year'], amrelease_year.get())
+def yearremove(year):
+    indx = search(d['release_year'], year)
+    # список для удаления нужен в порядке убывания индексов
+    indx.reverse()
+
+    for i in indx:
+        print(i)
+        d['id'].pop(i)
+        d['udk'].pop(i)
+        d['k_name'].pop(i)
+        d['k_genre'].pop(i)
+        d['manufacturer'].pop(i)
+        d['release_year'].pop(i)
+        d['out_date'].pop(i)
+        d['out_time'].pop(i)
+
+    tableupdate()
+
+# заменить udk
+def replaceudk(name, to):
+    indx = search(d['k_name'], name)
+    d['udk'][indx[0]] = to
+
+    tableupdate()
 
 # находит список интексов, содержащих запрошенное значение
 def search(list, item):
     indx = []
     for idx, value in enumerate(list):
-        if value == item:
+        if str(value) == str(item):
             indx.append(idx)
+    return indx
+
+# очищает поля ввода
+def delete_entries():
+  for field in fields:
+    field.delete(0, END)
 
 # ИНТЕРФЕЙС
 
@@ -105,14 +127,14 @@ def additional_menu():
     Input_frame.pack()
 
     # название
-    release_year = Label(Input_frame, text=h5)
-    release_year.grid(row=0, column=0)
+    amrelease_year = Label(Input_frame, text=h5)
+    amrelease_year.grid(row=0, column=0)
 
     # столбец
     amrelease_year = Entry(Input_frame)
     amrelease_year.grid(row=1, column=0)
 
-    Button(ws2, text="Удалить", command=input_record).pack()
+    Button(ws2, text="Удалить", command=lambda: (yearremove(amrelease_year.get()), ws2.destroy())).pack()
 
     # заменить удк кассеты
     Label(ws2, text="Заменить УДК кассеты", font=('Helvetica', 16, "bold")).pack()
@@ -120,21 +142,19 @@ def additional_menu():
     Input_frame.pack()
 
     # названия
-    k_name = Label(Input_frame, text=h2)
-    k_name.grid(row=0, column=0)
-
-
-    udk_to = Label(Input_frame, text="Заменить УДК на")
-    udk_to.grid(row=0, column=1)
+    amk_name = Label(Input_frame, text=h2)
+    amk_name.grid(row=0, column=0)
+    amudk_to = Label(Input_frame, text="Заменить УДК на")
+    amudk_to.grid(row=0, column=1)
 
     # столбцы
-    k_name = Entry(Input_frame)
-    k_name.grid(row=1, column=0)
-    udk_to = Entry(Input_frame)
-    udk_to.grid(row=1, column=1)
+    amk_name = Entry(Input_frame)
+    amk_name.grid(row=1, column=0)
+    amudk_to = Entry(Input_frame)
+    amudk_to.grid(row=1, column=1)
 
     # кнопка добавить
-    Input_button = Button(ws2, text="Применить", command=input_record)
+    Button(ws2, text="Применить", command=lambda: (replaceudk(amk_name.get(), amudk_to.get()), ws2.destroy())).pack()
 
     Input_button.pack()
 
@@ -153,7 +173,6 @@ def additional_menu():
     Button(ws2, text="Показать", command=lambda: show_by_manufacturer(ws2)).pack()
 
     ws2.mainloop()
-
 
 # все сведения по производителю (таблица)
 def show_by_manufacturer(ws2):
@@ -225,10 +244,6 @@ def show_by_manufacturer(ws2):
 
     out_time = Entry(Input_frame)
     out_time.grid(row=1, column=5)
-
-    # TODO delete
-    sbm.insert(parent='', index='end', iid=0, text='',
-               values=('1', 'Ninja', '101', 'Oklahoma', 'Moore'))
 
 
 # основной интерфейс
@@ -359,6 +374,9 @@ Label(ws, text="Другое", font=('Helvetica', 16, "bold")).pack()
 
 Func_button = Button(ws, text="Открыть Основные функции", width=45, height=3, command=additional_menu)
 Func_button.pack()
+
+# список полей для очистки
+fields = toout_time, toout_date, torelease_year, tomanufacturer, tok_genre, tok_name, toudk, id_entry
 
 # стиль
 style = ttk.Style()
