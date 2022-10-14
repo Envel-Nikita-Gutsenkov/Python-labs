@@ -5,15 +5,15 @@ d = {
     "id": ["0", "1", "2"],
     "udk": ["1.22", "2.66", "3.44"],
     "k_name": ["Name1", "Name2", "Name3"],
-    "k_genre": ["Genre1", "Genre1", "Genre1"],
+    "k_genre": ["Genre1", "Genre2", "Genre3"],
     "manufacturer": ["Manuf1", "Manuf2", "Manuf3"],
-    "release_year": [2000, 2000, 2000],
-    "out_date": ["01.01", "01.01", "01.01"],
-    "out_time": ["10.02", "10.02", "10.02"]
+    "release_year": [2000, 2001, 2002],
+    "out_date": ["01.01", "02.02", "03.03"],
+    "out_time": ["10.02", "11.03", "12.04"]
 }
 
 # предустановленное количество строк (от 0)
-count = 3
+count = 2
 
 h0 = "ID"
 h1 = "УДК  кассеты"
