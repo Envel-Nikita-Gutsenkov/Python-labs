@@ -3,12 +3,23 @@
 # RegEx
 import re
 
-print("Укажите число: ")
-x = float(input())
-# получаем 3 цифры после запятой с помощью регулярного выражения
-temp = re.search(r"(?<=\.)\d{3}", str(x))
-# проверка всех условий
-if x >= 0 and '0' in temp.group():
-    print("True")
-else:
-    print("False")
+while True:
+    # проверяем на вещественное число
+    try:
+        x = float(input ("Укажите число: "))
+    except ValueError:
+        print("Было введено не положительное вещественное число")
+    else:
+        print(x)
+        # проверяем на наличие 3 цифр после точки
+        try:
+            # получаем 3 цифры после запятой с помощью регулярного выражения
+            result = re.search(r"(?<=\.)\d{3}", str(x))
+            # проверка всех условий
+            if x >= 0 and '0' in result.group():
+                print("True")
+            else:
+                print("False")
+            exit(0)
+        except AttributeError:
+            print("Было введено вещественное число с менее 3 знаками после точки")
