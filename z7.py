@@ -6,7 +6,7 @@ d = {
     "udk": ["1.22", "2.66", "3.44"],
     "k_name": ["Name1", "Name2", "Name3"],
     "k_genre": ["Genre1", "Genre1", "Genre1"],
-    "manufacturer": ["Manuf4", "Manuf4", "Manuf4"],
+    "manufacturer": ["Manuf1", "Manuf2", "Manuf3"],
     "release_year": [2000, 2000, 2000],
     "out_date": ["01.01", "01.01", "01.01"],
     "out_time": ["10.02", "10.02", "10.02"]
@@ -100,6 +100,19 @@ def replaceudk(name, to):
 
     tableupdate()
 
+# все фильмы заданного производителя
+def searchfilms(name):
+    indx = search(d['manufacturer'], name)
+    main_menu.delete(*main_menu.get_children())
+
+    for i in indx:
+        main_menu.insert(parent='', index='end', text='', values=(
+            d['id'][i], d['udk'][i], d['k_name'][i], d['k_genre'][i], d['manufacturer'][i], d['release_year'][i],
+            d['out_date'][i],
+            d['out_time'][i]))
+
+    main_menu.pack()
+
 # находит список интексов, содержащих запрошенное значение
 def search(list, item):
     indx = []
@@ -163,88 +176,17 @@ def additional_menu():
     Input_frame = Frame(ws2)
     Input_frame.pack()
 
-    manufacturer = Label(Input_frame, text=h4)
-    manufacturer.grid(row=0, column=0)
+    ammanufacturer = Label(Input_frame, text=h4)
+    ammanufacturer.grid(row=0, column=0)
 
     # столбец
-    manufacturer = Entry(Input_frame)
-    manufacturer.grid(row=1, column=0)
+    ammanufacturer = Entry(Input_frame)
+    ammanufacturer.grid(row=1, column=0)
 
-    Button(ws2, text="Показать", command=lambda: show_by_manufacturer(ws2)).pack()
+    Button(ws2, text="Показать", command=lambda: (searchfilms(ammanufacturer.get()))).pack()
+    Button(ws2, text="Отмена", command=lambda: (tableupdate(), ws2.destroy())).pack()
 
     ws2.mainloop()
-
-# все сведения по производителю (таблица)
-def show_by_manufacturer(ws2):
-    Label(ws2, text="Список записей", font=('Helvetica', 16, "bold")).pack()
-
-    sbm_frame = Frame(ws2)
-    sbm_frame.pack()
-
-    # scrollbar
-    sbm_scroll = Scrollbar(sbm_frame)
-    sbm_scroll.pack(side=RIGHT, fill=Y)
-
-    sbm_scroll = Scrollbar(sbm_frame, orient='horizontal')
-    sbm_scroll.pack(side=BOTTOM, fill=X)
-
-    sbm = ttk.Treeview(sbm_frame, yscrollcommand=sbm_scroll.set, xscrollcommand=sbm_scroll.set)
-    # формат столбцов
-    sbm.column("#0", width=0, stretch=NO)
-    sbm.column("udk", anchor=CENTER, width=110)
-    sbm.column("k_name", anchor=CENTER, width=140)
-    sbm.column("k_genre", anchor=CENTER, width=90)
-    sbm.column("release_year", anchor=CENTER, width=100)
-    sbm.column("out_date", anchor=CENTER, width=100)
-    sbm.column("out_time", anchor=CENTER, width=110)
-
-    # названия столбцов
-    sbm.heading("#0", text="", anchor=CENTER)
-    sbm.heading("udk", text=h1, anchor=CENTER)
-    sbm.heading("k_name", text=h2, anchor=CENTER)
-    sbm.heading("k_genre", text=h3, anchor=CENTER)
-    sbm.heading("release_year", text=h5, anchor=CENTER)
-    sbm.heading("out_date", text=h6, anchor=CENTER)
-    sbm.heading("out_time", text=h7, anchor=CENTER)
-
-    # названия
-    udk = Label(Input_frame, text=h1)
-    udk.grid(row=0, column=0)
-
-    k_name = Label(Input_frame, text=h2)
-    k_name.grid(row=0, column=1)
-
-    k_genre = Label(Input_frame, text=h3)
-    k_genre.grid(row=0, column=2)
-
-    release_year = Label(Input_frame, text=h5)
-    release_year.grid(row=0, column=3)
-
-    out_date = Label(Input_frame, text=h6)
-    out_date.grid(row=0, column=4)
-
-    out_time = Label(Input_frame, text=h7)
-    out_time.grid(row=0, column=5)
-
-    # столбцы
-    udk = Entry(Input_frame)
-    udk.grid(row=1, column=0)
-
-    k_name = Entry(Input_frame)
-    k_name.grid(row=1, column=1)
-
-    k_genre = Entry(Input_frame)
-    k_genre.grid(row=1, column=2)
-
-    release_year = Entry(Input_frame)
-    release_year.grid(row=1, column=3)
-
-    out_date = Entry(Input_frame)
-    out_date.grid(row=1, column=4)
-
-    out_time = Entry(Input_frame)
-    out_time.grid(row=1, column=5)
-
 
 # основной интерфейс
 
