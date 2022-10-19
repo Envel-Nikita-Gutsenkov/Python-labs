@@ -8,9 +8,9 @@ while True:
     try:
         x = float(input ("Укажите число: "))
     except ValueError:
+        print("False")
         print("Было введено не положительное вещественное число")
     else:
-        print(x)
         # проверяем на наличие 3 цифр после точки
         try:
             # получаем 3 цифры после запятой с помощью регулярного выражения
@@ -22,4 +22,5 @@ while True:
                 print("False")
             exit(0)
         except AttributeError:
+            print("False")
             print("Было введено вещественное число с менее 3 знаками после точки")
