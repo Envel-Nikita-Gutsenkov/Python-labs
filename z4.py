@@ -192,28 +192,15 @@ def merge(l, m, r):
 
 # Отсортировать массив по невозрастанию методом распределения по массиву ключей, упорядоченному по неубыванию
 def seven():
-    quicksort(0, len(a1) - 1)
-    output()
+    a1.sort(reverse=True)
+    end, marker, i = len(a1) - 1, 0, 0
 
-
-def partition(start, end):
-    marker = start
-    i = start
     while i <= end:
         if a1[i] >= a1[end]:
             a1[marker], a1[i] = a1[i], a1[marker]
             marker += 1
         i += 1
-    return marker - 1
-
-
-def quicksort(start, end):
-    if start >= end:
-        return
-    pivot = partition(start, end)
-    print("Контрольная точка ", a1)
-    quicksort(start, (pivot - 1))
-    quicksort((pivot + 1), end)
+    output()
 
 
 # вывод данных
