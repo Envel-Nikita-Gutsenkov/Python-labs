@@ -16,95 +16,165 @@ smethod = ""
 # ЛОГИКА
 
 # методы сортировки
+# Отсортировать массив по невозрастанию методом включения с выбором включаемого элемента справа налево
 def one(window):
-    global smethod
+    global a1, smethod
     smethod = m1
     for f in range(len(a1) - 1, -1, -1):
         for u in range(len(a1) - 1, -1, -1):
-            if int(a1[f]) < int((a1[u])):
-                swapPositions(f, u)
+            if a1[f] < a1[u]:
+                a1[f], a1[u] = a1[u], a1[f]
+    # выводим массивы
     switch(window, output, None)
 
 
+# Отсортировать массив по невозрастанию методом извлечения максимального элемента, поиск максимального элемента проводить слева направо
 def two(window):
-    global smethod
+    global a1, smethod
     smethod = m2
-    print(smethod, m2)
     for f in range(0, len(a1), 1):
         temp = f
         for u in range(f + 1, len(a1), 1):
-            if int(a1[temp]) < int(a1[u]):
+            if a1[temp] < a1[u]:
                 temp = u
-        swapPositions(f, temp)
+        a1[f], a1[temp] = a1[temp], a1[f]
+    # выводим массивы
     switch(window, output, None)
 
 
+# Отсортировать массив по неубыванию методом обменов рядом стоящих элементов с фиксированным числом просмотров, направленных справа налево
 def three(window):
-    global smethod
+    global a1, smethod
     smethod = m3
     for u in range(len(a1) - 1, 0, -1):
         for f in range(len(a1) - 1, 0, -1):
-            if int(a1[f - 1]) > int(a1[f]):
-                swapPositions(f - 1, f)
+            if a1[f - 1] > a1[f]:
+                a1[f], a1[f - 1] = a1[f - 1], a1[f]
+    # выводим массивы
     switch(window, output, None)
 
 
+# Отсортировать массив по невозрастанию методом обменов рядом стоящих элементов с минимально необходимым (переменным) числом просмотров, направленных слева направо
 def four(window):
-    global smethod
+    global a1, smethod
     smethod = m4
+    # для выполнения первой интерации
     w = bool(True)
     for u in range(1, len(a1), 1):
+        # если в предыдущей интерации действий не было, завершить
         if w == bool(False):
-            return output()
+            return switch(window, output, None)
         else:
             w = bool(False)
             for f in range(1, len(a1), 1):
-                if int(a1[f - 1]) < int(a1[f]):
-                    swapPositions(f - 1, f)
+                if a1[f - 1] < a1[f]:
+                    a1[f], a1[f - 1] = a1[f - 1], a1[f]
                     w = bool(True)
+    # выводим массивы
     switch(window, output, None)
 
 
+# Отсортировать массив по неубыванию методом обменов рядом стоящих элементов за один просмотр (с возвратами) справа налево
 def five(window):
-    global smethod
+    global a1, smethod
     smethod = m5
-    for u in range(len(a1) - 1, 0, -1):
-        w = bool(True)
-        for f in range(len(a1) - 1, 0, -1):
-            if w == bool(False):
-                return
-            elif a1[f - 1] > a1[f]:
-                swapPositions(f - 1, f)
-                print("Произвел замену и возврат к началу")
-                output()
-                w = bool(False)
+    left, right = 0, len(a1) - 1
+    # сравниваем элементы попарно и меняем при необходимости
+    while left <= right:
+        for i in range(left, right, +1):
+            if a1[i] > a1[i + 1]:
+                a1[i], a1[i + 1] = a1[i + 1], a1[i]
+        right -= 1
+        for i in range(right, left, -1):
+            if a1[i - 1] > a1[i]:
+                a1[i], a1[i - 1] = a1[i - 1], a1[i]
+        left += 1
+    # выводим массивы
     switch(window, output, None)
 
 
+# Получить упорядоченный по неубыванию массив методом слияния двух упорядоченных по невозрастанию массивов
 def six(window):
-    global smethod
+    global a1, smethod
     smethod = m6
+    '''# делим массив на 2 массива
+    L, R = a1[:len(a1) // 2], a1[len(a1) // 2:]
+    # сортируем оба массива по невозрастанию
+    L.sort(reverse=True)
+    R.sort(reverse=True)'''
+    mergeSort(0, len(a1) - 1)
     switch(window, output, None)
 
 
+def mergeSort(l, r):
+    if l < r:
+        m = (l + r) // 2
+
+        mergeSort(l, m)
+        mergeSort(m + 1, r)
+        merge(l, m, r)
+
+
+def merge(l, m, r):
+    n1 = m - l + 1
+    n2 = r - m
+
+    L = [0] * n1
+    R = [0] * n2
+
+    for i in range(0, n1):
+        L[i] = a1[l + i]
+
+    for j in range(0, n2):
+        R[j] = a1[m + 1 + j]
+
+    i = 0
+    j = 0
+    k = l
+
+    while i < n1 and j < n2:
+        if L[i] <= R[j]:
+            a1[k] = L[i]
+            i += 1
+        else:
+            a1[k] = R[j]
+            j += 1
+        k += 1
+
+    while i < n1:
+        a1[k] = L[i]
+        i += 1
+        k += 1
+
+    while j < n2:
+        a1[k] = R[j]
+        j += 1
+        k += 1
+
+
+# Отсортировать массив по невозрастанию методом распределения по массиву ключей, упорядоченному по неубыванию
 def seven(window):
-    global smethod
+    global a1, smethod
     smethod = m7
+    a1.sort(reverse=True)
+    end, marker, i = len(a1) - 1, 0, 0
+
+    while i <= end:
+        if a1[i] >= a1[end]:
+            a1[marker], a1[i] = a1[i], a1[marker]
+            marker += 1
+        i += 1
+
     switch(window, output, None)
-
-
-# меняет элементы массива местами
-def swapPositions(pos1, pos2):
-    temp = a1[pos1]
-    a1[pos1] = a1[pos2]
-    a1[pos2] = temp
-    return a1
 
 
 # получает строку данных из tk.Entry и создает из этого массив
 def arrayprocess(rawarray):
     global a1, a2
     a1 = rawarray.split(',')
+    # преобразование str в int
+    for i in range(len(a1)):
+        a1[i] = int(a1[i])
     # для вывода исходного массива в ответе
     a2 = list(a1)
     method()
@@ -179,7 +249,7 @@ def output():
 
     tk.Label(window, text="Задача выполнена", font=('Helvetica', 16, "bold")).pack()
 
-    text = tk.Text(window, height=8, font=('Helvetica', 18))
+    text = tk.Text(window, height=10, font=('Helvetica', 18))
     text.pack()
 
     # исключаем переход на новую строку

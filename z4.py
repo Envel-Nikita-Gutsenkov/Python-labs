@@ -34,7 +34,7 @@ def main():
 
     # вводим способ сортировки
     print("Выберите метод сортировки одномерного массива: ")
-    print(m1, "\n", m2, "\n", m3, "\n", m4, "\n", m5, "\n", m6, "\n", m7)
+    print( m1, "\n", m2, "\n", m3, "\n", m4, "\n", m5, "\n", m6, "\n", m7)
     try:
         x = int(input())
     except ValueError:
@@ -80,7 +80,7 @@ def two():
         for u in range(f + 1, len(a1), 1):
             if a1[temp] < a1[u]:
                 temp = u
-        a1[f], a1[temp] = a1[temp], a1[u]
+        a1[f], a1[temp] = a1[temp], a1[f]
     # выводим массивы
     output()
 
@@ -115,12 +115,10 @@ def four():
 
 # Отсортировать массив по неубыванию методом обменов рядом стоящих элементов за один просмотр (с возвратами) справа налево
 def five():
-    left = 0
-    right = len(a1) - 1
+    left, right = 0, len(a1) - 1
     # сравниваем элементы попарно и меняем при необходимости
     while left <= right:
         for i in range(left, right, +1):
-            print(a1)
             if a1[i] > a1[i + 1]:
                 a1[i], a1[i + 1] = a1[i + 1], a1[i]
         right -= 1
