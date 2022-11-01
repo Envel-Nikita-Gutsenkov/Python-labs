@@ -1,4 +1,4 @@
-# Import math Library
+# import math Library
 import math
 
 print("Укажите x: ")
